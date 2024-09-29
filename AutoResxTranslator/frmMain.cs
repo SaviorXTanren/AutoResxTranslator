@@ -342,7 +342,7 @@ namespace AutoResxTranslator
 						if (destTranslateOnlyNewKeys)
 						{
 							int destIndex = index - destIndexCorrection;
-							var destNode = ResxTranslator.GetDataKeyName(destinationDataList.ElementAt(destIndex));
+							var destNode = (destIndex < destinationDataList.Count) ? ResxTranslator.GetDataKeyName(destinationDataList.ElementAt(destIndex)) : null;
 							if (destNode == keyNode)
 							{
 								valueNode.InnerText = ResxTranslator.GetDataValueNode(destinationDataList.ElementAt(destIndex)).InnerText;
@@ -635,8 +635,10 @@ namespace AutoResxTranslator
 					if (languageTag != "")
 					{
 						var haskey = _languages.FirstOrDefault(x => x.Key.Equals(languageTag, StringComparison.InvariantCultureIgnoreCase));
-
-						lstResxLanguages.Items[lstResxLanguages.Items.IndexOfKey(haskey.Key)].Checked = true;
+						if (haskey.Key != null)
+						{
+                            lstResxLanguages.Items[lstResxLanguages.Items.IndexOfKey(haskey.Key)].Checked = true;
+                        }
 					}
 				}
 
